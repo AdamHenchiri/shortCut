@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="162.38.222.93" id="b868476f-7d0b-4c0d-9143-5ffc961f0123" port="6666" customName="IUT" nameFormat="CUSTOM" username="rathiers" useOpenSSHConfig="true">
+        <option name="customName" value="IUT" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>

@@ -3,11 +3,16 @@
         <legend>Plus court chemin </legend>
         <p class="InputAddOn">
             <label class="InputAddOn-item" for="nomCommuneDepart_id">Nom de la commune de départ</label>
-            <input class="InputAddOn-field" type="text" value="" placeholder="Ex : Menton" name="nomCommuneDepart" id="nomCommuneDepart_id" required>
+                <input class="InputAddOn-field" type="text" value="" placeholder="Ex : Menton" name="nomCommuneDepart" id="nomCommuneDepart_id" required>
+                <div id="autocompletion"></div>
+
+
         </p>
         <p class="InputAddOn">
             <label class="InputAddOn-item" for="nomCommuneArrivee_id">Nom de la commune de départ</label>
             <input class="InputAddOn-field" type="text" value="" placeholder="Ex : Menton" name="nomCommuneArrivee" id="nomCommuneArrivee_id" required>
+            <div id="autocompletionArrivee"></div>
+
         </p>
         <input type="hidden" name="XDEBUG_TRIGGER">
         <p>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="d6ebe669-5b6c-4d19-8898-39f148d17f58" name="iut" url="http://webinfo.iutmontp.univ-montp2.fr/~rathiers/SAE">
+        <fileTransfer rootFolder="/home/ann2/rathiers/public_html/SAE" accessType="SFTP" host="162.38.222.93" port="6666" sshConfigId="b868476f-7d0b-4c0d-9143-5ffc961f0123" sshConfig="IUT">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

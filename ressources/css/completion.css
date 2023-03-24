@@ -1,0 +1,11 @@
+
+.ma-classe {
+    padding: 15px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.ma-classe:hover {
+    background-color: grey;
+
+}

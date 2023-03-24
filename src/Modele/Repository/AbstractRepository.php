@@ -3,6 +3,7 @@
 namespace App\PlusCourtChemin\Modele\Repository;
 
 use App\PlusCourtChemin\Modele\DataObject\AbstractDataObject;
+use http\Encoding\Stream;
 use PDOException;
 
 abstract class AbstractRepository
@@ -162,4 +163,52 @@ abstract class AbstractRepository
             }
         }
     }
+
+    public function selectByName(string $valeurChamp, string $name) {
+
+        $nomTable = $this->getNomTable();
+
+        $sql = "SELECT * FROM $nomTable WHERE $valeurChamp LIKE :valeurNameTag LIMIT 5;";
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($sql);
+
+        $values = array(
+            "valeurNameTag" => "%$name%",
+        );
+
+        $pdoStatement->execute($values);
+
+        /*$objets = [];
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $objets[] = $this->construireDepuisTableau($objetFormatTableau);
+        }*/
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        $tabResul= $pdoStatement->fetchAll();
+        return $tabResul;
+
+    }
+
+    public function selectGeom(string $valeurChamp, string $name){
+        $nomTable = $this->getNomTable();
+
+        $sql = "SELECT ST_AsGeoJSON(geom) FROM $nomTable WHERE $valeurChamp LIKE :valeurNameTag LIMIT 5;";
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($sql);
+
+        $values = array(
+            "valeurNameTag" => "%$name%",
+        );
+
+        $pdoStatement->execute($values);
+
+        /*$objets = [];
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $objets[] = $this->construireDepuisTableau($objetFormatTableau);
+        }*/
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        $tabResul= $pdoStatement->fetchAll();
+        return $tabResul;
+    }
+
+
 }
