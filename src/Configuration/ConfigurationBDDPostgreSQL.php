@@ -12,12 +12,15 @@ class ConfigurationBDDPostgreSQL implements ConfigurationBDDInterface
 
     public function getLogin(): string
     {
-        throw new Exception("Login BDD non renseigné !");
+        //throw new Exception("Login BDD non renseigné !");
+
+        return "rathiers";
     }
 
     public function getMotDePasse(): string
     {
-        throw new Exception("Mot de passe BDD non renseigné !");
+        //throw new Exception("Mot de passe BDD non renseigné !");
+        return "080646729EB";
     }
 
     public function getDSN() : string{
@@ -28,3 +31,6 @@ class ConfigurationBDDPostgreSQL implements ConfigurationBDDInterface
         return array();
     }
 }
+
+//https://webinfo.iutmontp.univ-montp2.fr/~rathiers/JS/web/controleurFrontal.php?action=plusCourtChemin&controleur=noeudCommune
+

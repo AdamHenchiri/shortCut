@@ -3,6 +3,7 @@
 namespace App\PlusCourtChemin\Modele\Repository;
 
 use App\PlusCourtChemin\Modele\DataObject\AbstractDataObject;
+use http\Encoding\Stream;
 use PDOException;
 
 abstract class AbstractRepository
@@ -162,4 +163,56 @@ abstract class AbstractRepository
             }
         }
     }
+
+    //Recupere les donnes en fonction des paramètres
+    //Retourne un tableau
+    public function selectByName(string $valeurChamp, string $name) {
+
+        $nomTable = $this->getNomTable();
+
+        $sql = "SELECT * FROM $nomTable WHERE $valeurChamp LIKE :valeurNameTag LIMIT 5;";
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($sql);
+
+        $values = array(
+            "valeurNameTag" => "%$name%",
+        );
+
+        $pdoStatement->execute($values);
+
+        /*$objets = [];
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $objets[] = $this->construireDepuisTableau($objetFormatTableau);
+        }*/
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        $tabResul= $pdoStatement->fetchAll();
+        return $tabResul;
+
+    }
+
+    //Recupere les donnes geom (coordonnes) ainsi que le champ mis en paramètre en fonction de la ça valeur donnée
+    //Retourne un tableau
+    public function selectGeom(string $valeurChamp, string $name){
+        $nomTable = $this->getNomTable();
+
+        $sql = "SELECT $valeurChamp, ST_AsGeoJSON(geom) FROM $nomTable WHERE $valeurChamp LIKE :valeurNameTag LIMIT 1;";
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($sql);
+
+        $values = array(
+            "valeurNameTag" => "%$name%",
+        );
+
+        $pdoStatement->execute($values);
+
+        /*$objets = [];
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $objets[] = $this->construireDepuisTableau($objetFormatTableau);
+        }*/
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        $tabResul= $pdoStatement->fetchAll();
+        return $tabResul;
+    }
+
+
 }

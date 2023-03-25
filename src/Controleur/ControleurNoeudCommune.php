@@ -84,4 +84,28 @@ class ControleurNoeudCommune extends ControleurGenerique
 
         ControleurNoeudCommune::afficherVue('vueGenerale.php', $parametres);
     }
+
+
+    public static function autocompletion(){
+        $nomCommuneDepart = $_GET["nomCommuneDepart"];
+        $noeudCommuneRepository = new NoeudCommuneRepository();
+        $tab = $noeudCommuneRepository->selectByName("nom_comm",$nomCommuneDepart);
+
+        echo json_encode($tab);
+
+    }
+
+    public static function donneesCarte(){
+        $nomCommuneDepart = $_GET["nomCommuneDepart"];
+        $noeudCommuneRepository = new NoeudCommuneRepository();
+        $tab = $noeudCommuneRepository->selectGeom("nom_comm",$nomCommuneDepart);
+
+        echo json_encode($tab);
+
+
+    }
+
+
+
+
 }
