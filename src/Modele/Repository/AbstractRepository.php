@@ -164,6 +164,8 @@ abstract class AbstractRepository
         }
     }
 
+    //Recupere les donnes en fonction des paramètres
+    //Retourne un tableau
     public function selectByName(string $valeurChamp, string $name) {
 
         $nomTable = $this->getNomTable();
@@ -188,10 +190,12 @@ abstract class AbstractRepository
 
     }
 
+    //Recupere les donnes geom (coordonnes) ainsi que le champ mis en paramètre en fonction de la ça valeur donnée
+    //Retourne un tableau
     public function selectGeom(string $valeurChamp, string $name){
         $nomTable = $this->getNomTable();
 
-        $sql = "SELECT ST_AsGeoJSON(geom) FROM $nomTable WHERE $valeurChamp LIKE :valeurNameTag LIMIT 5;";
+        $sql = "SELECT $valeurChamp, ST_AsGeoJSON(geom) FROM $nomTable WHERE $valeurChamp LIKE :valeurNameTag LIMIT 1;";
         // Préparation de la requête
         $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($sql);
 

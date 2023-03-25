@@ -1,4 +1,14 @@
 #mapid {
     height: 550px;
-    width: 900px;
+    width: 45vw;
+    float: right;
 }
+#formCalcule {
+    width: 45vw;
+    float: left; /* Faire flotter le formulaire à gauche */
+}
+
+.container_calcule{
+    width: 100vw;
+}
+

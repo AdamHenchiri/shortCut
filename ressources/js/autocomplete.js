@@ -1,11 +1,11 @@
-//document.addEventListener('DOMContentLoaded', function () {
-
+//Récupère les div qui servent à l'autocompletion
     var liste_ville = document.getElementById("autocompletion");
     var auto2 = document.getElementById("autocompletionArrivee");
-    var  longueurListe = 5;
 
+    //Fonction pour afficher le nom des ville dans la div
+    //5 villes affichees (voir la requete sql)
+    //tableau -> nom des ville, divComplete -> indique l'autocompletion pour ville de départ ou d'arrivée
     function afficheVilles(tableau, divComplete) {
-        // à compléter
         //console.log(tableau);
         videVilles(divComplete);
         for (let i = 0; i < tableau.length; i++) {
@@ -14,11 +14,11 @@
             ville.textContent = tableau[i].nom_comm;
             divComplete.appendChild(ville);
         }
-
         divComplete.style.borderWidth = `${tableau.length > 0 ? 1 : 0}px`
-
     }
 
+    //Méthode pour vider la div d'autocompletion
+    //divComplete -> indique l'autocompletion pour ville de départ ou d'arrivée
     function videVilles(divComplete) {
         let child = divComplete.lastElementChild;
         while (child) {
@@ -28,15 +28,16 @@
 
     }
 
+    //Pas utiliser mais permet l'affichage d'un gif
     function actionDebut() {
-
         loading.style.visibility = "visible";
     }
-
+    //Pas utiliser mais permet d'enlever l'affichage d'un gif
     function actionFin() {
         loading.style.visibility = "hidden";
     }
 
+    //Fais une requête pour récupérer les données et appelle le callback mis en paramètre
     function requeteAJAX(stringVille, callback, action_debut, action_fin) {
         let url = "controleurFrontal.php?action=autocompletion&controleur=noeudCommune&nomCommuneDepart=" + encodeURIComponent(stringVille);
         let requete = new XMLHttpRequest();
@@ -49,19 +50,19 @@
         requete.send();
     }
 
+    //Appelle requeteAJAX avec ces parametres
     function maRequeteAJAX(string) {
         //mettre tout le temps la première lettre en majuscule au cas ou il est en minuscule et mettre les autres lettres en minuscules
         string = string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
         requeteAJAX(string, callback_4, actionDebut, actionFin);
     }
 
+    //Met la requete en Json et appelle l'affichage des villes en fonction de l'input
     function callback_4(req) {
-
         //tab = tab.map(e => e.name);
         //console.log(tab);
         document.addEventListener('input', function(event) {
             let tab = JSON.parse(req.responseText);
-
             if (event.target.id === 'nomCommuneDepart_id') {
                 afficheVilles(tab, liste_ville);
             }
@@ -73,8 +74,10 @@
 
     }
 
+    //recupère le input de départ
     var nomCommuneDepart = document.getElementById("nomCommuneDepart_id");
-
+    //Apelle maRequete lorsque l'input est utilisé
+    //Le vide ville ne fonctionne pas ici
     nomCommuneDepart.addEventListener("input", function () {
         //console.log("chargement terminé !!!");
         let stringVille = nomCommuneDepart.value;
@@ -98,7 +101,10 @@
 
     });
 
+    //recupère le input d'arrivée
     var nomCommuneArrivee = document.getElementById("nomCommuneArrivee_id");
+    //Apelle maRequete lorsque l'input est utilisé
+    //Le vide ville ne fonctionne pas ici
 
     nomCommuneArrivee.addEventListener("input", function () {
         //console.log("chargement terminé !!!");
@@ -114,6 +120,7 @@
 
     });
 
+    //vide la liste des villes dans l'autocompletion lorsque l'on click sur une ville
 document.addEventListener("click", function(event){
     if(event.target.className === "ma-classe") {
         var targetElement = event.target;
@@ -123,8 +130,10 @@ document.addEventListener("click", function(event){
 });
 
 //--------------------------------------------------------------
+//Le reste permet l'utilisation des flèches pour descendre
+// et monter et la touche entrer pour selectionner une ville
 
-
+//Met à jour l'index qui permet de savoir où on se situ dans la liste
 function updateSelectedIndex(l, selectedIndex) {
     for (let i = 0; i < l.length; i++) {
         l[i].classList.remove("selected");

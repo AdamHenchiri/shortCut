@@ -96,16 +96,16 @@ class ControleurNoeudCommune extends ControleurGenerique
     }
 
     public static function donneesCarte(){
-
         $nomCommuneDepart = $_GET["nomCommuneDepart"];
-        $nomCommuneArrivee = $_GET["nomCommuneArrivee"];
         $noeudCommuneRepository = new NoeudCommuneRepository();
         $tab = $noeudCommuneRepository->selectGeom("nom_comm",$nomCommuneDepart);
-        var_dump($tab);
 
+        echo json_encode($tab);
 
 
     }
+
+
 
 
 }
