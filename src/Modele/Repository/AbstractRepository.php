@@ -175,7 +175,7 @@ abstract class AbstractRepository
         $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($sql);
 
         $values = array(
-            "valeurNameTag" => "$name%",
+            "valeurNameTag" => "%$name%",
         );
 
         $pdoStatement->execute($values);
