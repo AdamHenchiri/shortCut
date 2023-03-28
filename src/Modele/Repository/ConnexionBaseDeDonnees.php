@@ -28,12 +28,15 @@ class ConnexionBaseDeDonnees
         $configuration = new Configuration(new ConfigurationBDDPostgreSQL());
         $configurationBDD = $configuration->getConfigurationBDD();
 
+        $host = '172.16.21.29';
+        $dbname = 'gis';
+        $username = 'docker';
+        $password = 'AgzGlu96xxUL2ey7DzTi';
+        $port = '25432';
+
         // Connexion à la base de données
         $this->pdo = new PDO(
-            $configurationBDD->getDSN(),
-            $configurationBDD->getLogin(),
-            $configurationBDD->getMotDePasse(),
-            $configurationBDD->getOptions()
+            "pgsql:host=$host;port=$port;dbname=$dbname;user=$username;password=$password"
         );
 
 
