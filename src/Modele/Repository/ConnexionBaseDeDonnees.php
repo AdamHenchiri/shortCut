@@ -19,6 +19,12 @@ class ConnexionBaseDeDonnees
 
     private function __construct()
     {
+        $host = '172.16.21.29';
+        $dbname = 'gis';
+        $username = 'docker';
+        $password = 'AgzGlu96xxUL2ey7DzTi';
+        $port = '25432';
+
         $configuration = new Configuration(new ConfigurationBDDPostgreSQL());
         $configurationBDD = $configuration->getConfigurationBDD();
 
@@ -29,6 +35,7 @@ class ConnexionBaseDeDonnees
             $configurationBDD->getMotDePasse(),
             $configurationBDD->getOptions()
         );
+
 
         // On active le mode d'affichage des erreurs, et le lancement d'exception en cas d'erreur
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
