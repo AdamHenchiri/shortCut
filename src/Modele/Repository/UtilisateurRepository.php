@@ -37,7 +37,6 @@ class UtilisateurRepository extends AbstractRepository
 
     public function getNomTable(): string
     {
-        throw new Exception("À vous de créer votre table utilisateur !");
         return 'utilisateur';
     }
 

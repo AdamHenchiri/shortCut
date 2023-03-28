@@ -35,7 +35,7 @@ class Configuration
 
     public static function getAbsoluteURL() : string
     {
-        throw new Exception("URL absolue non renseignée !");
+        return "https://webinfo.iutmontp.univ-montp2.fr/~henchiria/sae04/web/controleurFrontal.php";
     }
 
 }

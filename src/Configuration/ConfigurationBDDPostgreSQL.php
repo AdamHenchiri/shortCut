@@ -7,30 +7,24 @@ use PDO;
 
 class ConfigurationBDDPostgreSQL implements ConfigurationBDDInterface
 {
-    private string $nomBDD = "iut";
-    private string $hostname = "162.38.222.142";
+    private string $nomBDD = "gis";
+    private string $hostname = "localhost";
 
     public function getLogin(): string
     {
-        //throw new Exception("Login BDD non renseigné !");
-
-        return "rathiers";
+        return "docker";
     }
 
     public function getMotDePasse(): string
     {
-        //throw new Exception("Mot de passe BDD non renseigné !");
-        return "080646729EB";
+        return "AgzGlu96xxUL2ey7DzTi";
     }
 
     public function getDSN() : string{
-        return "pgsql:host={$this->hostname};dbname={$this->nomBDD};options='--client_encoding=UTF8'";
+        return "pgsql:host={$this->hostname};port=25432;dbname={$this->nomBDD};options='--client_encoding=UTF8'";
     }
 
     public function getOptions() : array {
         return array();
     }
 }
-
-//https://webinfo.iutmontp.univ-montp2.fr/~rathiers/JS/web/controleurFrontal.php?action=plusCourtChemin&controleur=noeudCommune
-
