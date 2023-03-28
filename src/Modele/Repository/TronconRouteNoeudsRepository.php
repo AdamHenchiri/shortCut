@@ -74,7 +74,7 @@ class TronconRouteNoeudsRepository extends AbstractRepository
     public function getDonneesChemin(int $comDepartGid, int $comArriveeGid): array
     {
         $requeteSQL = <<<SQL
-        select the_geom from troncon_route_noeuds
+        select ST_AsGeoJSON(the_geom) from troncon_route_noeuds
         WHERE id in (
         SELECT edge from pgr_dijkstra(
         'SELECT id, source, target, cost FROM troncon_route_noeuds',

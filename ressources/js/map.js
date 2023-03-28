@@ -31,6 +31,20 @@ function affichePoint(tableau){
 
 }
 
+function afficheRoute(tableau){
+    let latitude = tableau[0];
+    let longitude = tableau[1];
+    tabVille = [longitude, latitude];
+    coords.push(tabVille);
+    console.log(coords);
+    JSON.stringify(coords);
+    //coords = [[51.509, -0.10], [43.59917865, 3.894125217]];
+    for (var i = 0; i < coords.length; i++) {
+        L.marker(coords[i]).addTo(mymap);
+    }
+
+}
+
 //Recupère les données (coordonnées) grâce à l'url et appelle la fonction affichePoint grâce aux coordonnées
 //Methide GET
 function maRequete(string){
