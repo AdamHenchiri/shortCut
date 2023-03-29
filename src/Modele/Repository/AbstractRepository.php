@@ -214,5 +214,27 @@ abstract class AbstractRepository
         return $tabResul;
     }
 
+    public function getDonneesChemin(int $comDepartGid, int $comArriveeGid): array
+    {
+        $requeteSQL = <<<SQL
+        select ST_AsGeoJSON(the_geom) from troncon_route_noeuds
+        WHERE id in (
+        SELECT edge from pgr_dijkstra(
+        'SELECT id, source, target, cost FROM troncon_route_noeuds',
+        :gidDepartTag::bigint,
+        :gidArriveeTag::bigint, 
+        directed := false
+        ));
+        SQL;
+        $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($requeteSQL);
+        $pdoStatement->execute(array(
+            "gidDepartTag" => $comDepartGid,
+            "gidArriveeTag" => $comArriveeGid
+        ));
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        $tab = $pdoStatement->fetchAll();
+        return $tab;
+    }
+
 
 }

@@ -2,10 +2,10 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="d6ebe669-5b6c-4d19-8898-39f148d17f58" name="iut" url="http://webinfo.iutmontp.univ-montp2.fr/~rathiers/SAE">
-        <fileTransfer rootFolder="/home/ann2/rathiers/public_html/SAE" accessType="SFTP" host="162.38.222.93" port="6666" sshConfigId="b868476f-7d0b-4c0d-9143-5ffc961f0123" sshConfig="IUT">
+      <webServer id="40e8a642-6e21-4d4d-8bb8-e60c6aa1f307" name="iut (project level)" url="https://webinfo.iutmontp.univ-montp2.fr/~henchiria/sae04/">
+        <fileTransfer rootFolder="/home/ann2/henchiria/public_html/sae04" accessType="SFTP" host="162.38.222.93" port="6666" sshConfigId="54c4bf91-c30f-4297-905b-2ba317d09dae" sshConfig="henchiria@162.38.222.93:6666 password">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
         </fileTransfer>
       </webServer>

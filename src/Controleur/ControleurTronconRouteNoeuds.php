@@ -36,10 +36,12 @@ class ControleurTronconRouteNoeuds extends ControleurGenerique
         ])[0]->getGid();
 
         $tronconRouteNoeudsRepository = new TronconRouteNoeudsRepository();
-        $tronconRouteNoeudsRepository->getDonneesChemin($noeudRoutierDepartGid,$noeudRoutierArriveeGid);
+        $tab = $tronconRouteNoeudsRepository->getDonneesChemin($noeudRoutierDepartGid,$noeudRoutierArriveeGid);
 
-        var_dump($tronconRouteNoeudsRepository);
-        echo json_encode($tronconRouteNoeudsRepository);
+        echo json_encode($tab);
+
+
+
 
 
     }

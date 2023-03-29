@@ -71,6 +71,7 @@ class TronconRouteNoeudsRepository extends AbstractRepository
         return $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /*
     public function getDonneesChemin(int $comDepartGid, int $comArriveeGid): array
     {
         $requeteSQL = <<<SQL
@@ -79,7 +80,7 @@ class TronconRouteNoeudsRepository extends AbstractRepository
         SELECT edge from pgr_dijkstra(
         'SELECT id, source, target, cost FROM troncon_route_noeuds',
         :gidDepartTag::bigint,
-        :gidArriveeTag::bigint,
+        :gidArriveeTag::bigint, 
         directed := false
         ));
         SQL;
@@ -88,8 +89,9 @@ class TronconRouteNoeudsRepository extends AbstractRepository
             "gidDepartTag" => $comDepartGid,
             "gidArriveeTag" => $comArriveeGid
         ));
-        return $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        return $pdoStatement->fetchAll();
     }
-
+*/
 
 }

@@ -32,18 +32,44 @@ function affichePoint(tableau){
 }
 
 function afficheRoute(tableau){
-    let latitude = tableau[0];
-    let longitude = tableau[1];
-    tabVille = [longitude, latitude];
-    coords.push(tabVille);
-    console.log(coords);
-    JSON.stringify(coords);
+    var tabRoute = [];
     //coords = [[51.509, -0.10], [43.59917865, 3.894125217]];
-    for (var i = 0; i < coords.length; i++) {
-        L.marker(coords[i]).addTo(mymap);
+    for (var i = 0; i < tableau.length; i++) {
+        var tabTroncon = [];
+        for (let j = 0 ; j<tableau[i].coordinates.length;j++){
+            tabTroncon.push((tableau[i].coordinates[j]).reverse());
+            console.log(tabTroncon);
+        }
+        L.polyline(tabTroncon, {color: 'red'}).addTo(mymap);
     }
+   /* console.log(tabRoute);
+    console.log(JSON.stringify(tabRoute));
+    for (var i = 0; i < tabRoute.length; i++) {
+        L.polyline(tabRoute, {color: 'red'}).addTo(mymap);
+    }*/
+
 
 }
+
+function maRequete2(string1,string2){
+    let url = "controleurFrontal.php?action=donneesRoute&controleur=TronconRouteNoeuds&nomCommuneDepart=" + encodeURIComponent(string1)+"&nomCommuneArrivee="+encodeURIComponent(string2);
+    let requete = new XMLHttpRequest();
+    requete.open("GET", url, true);
+    //requete.addEventListener("loadstart", action_debut)
+    requete.addEventListener("load", function () {
+        //console.log(requete.responseText);
+        let tab = JSON.parse(requete.responseText);
+        let tableau = [];
+        for(let i = 0 ; i<tab.length;i++){
+            tableau.push(JSON.parse(tab[i].st_asgeojson));
+        }
+        afficheRoute(tableau);
+
+    });
+    requete.send(null);
+
+}
+
 
 //Recupère les données (coordonnées) grâce à l'url et appelle la fonction affichePoint grâce aux coordonnées
 //Methide GET
@@ -53,6 +79,7 @@ function maRequete(string){
     requete.open("GET", url, true);
     //requete.addEventListener("loadstart", action_debut)
     requete.addEventListener("load", function () {
+        //console.log(requete.responseText);
         let tab = JSON.parse(requete.responseText);
         //console.log(JSON.parse(tab[0].st_asgeojson));
         tableau = JSON.parse(tab[0].st_asgeojson);
@@ -77,6 +104,7 @@ document.addEventListener("DOMContentLoaded",  function() {
         maRequete(stringArrivee);
         //Requète sur la ville d'arrivée
         maRequete(stringDepart);
+        maRequete2(stringDepart,stringArrivee);
     }
 
 
