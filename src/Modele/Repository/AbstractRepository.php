@@ -217,14 +217,18 @@ abstract class AbstractRepository
     public function getDonneesChemin(int $comDepartGid, int $comArriveeGid): array
     {
         $requeteSQL = <<<SQL
-        select ST_AsGeoJSON(the_geom) from troncon_route_noeuds
-        WHERE id in (
-        SELECT edge from pgr_dijkstra(
-        'SELECT id, source, target, cost FROM troncon_route_noeuds',
-        :gidDepartTag::bigint,
-        :gidArriveeTag::bigint, 
-        directed := false
-        ));
+        SELECT ST_AsGeoJSON(trn.the_geom) as geom, tablaAstar.agg_cost
+        FROM troncon_route_noeuds trn
+        RIGHT JOIN (
+            SELECT *
+            FROM pgr_astar(
+                'SELECT id, source, target, cost, x1, y1, x2, y2 FROM troncon_route_noeuds',
+                :gidDepartTag::bigint,
+                :gidArriveeTag::bigint,
+                false
+            )
+        ) as tablaAstar
+        ON trn.id = tablaAstar.edge;
         SQL;
         $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($requeteSQL);
         $pdoStatement->execute(array(
@@ -235,6 +239,7 @@ abstract class AbstractRepository
         $tab = $pdoStatement->fetchAll();
         return $tab;
     }
+
 
 
 }

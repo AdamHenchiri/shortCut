@@ -1,5 +1,5 @@
 <section class="container_calcule">
-<form id="formCalcule" action="" method="post">
+<form id="formCalcule"  method="post">
     <fieldset>
         <legend>Plus court chemin </legend>
         <p class="InputAddOn">
@@ -10,21 +10,21 @@
 
         </p>
         <p class="InputAddOn">
-            <label class="InputAddOn-item" for="nomCommuneArrivee_id">Nom de la commune de départ</label>
+            <label class="InputAddOn-item" for="nomCommuneArrivee_id">Nom de la commune d'arrivée </label>
             <input class="InputAddOn-field" type="text" value="" placeholder="Ex : Menton" name="nomCommuneArrivee" id="nomCommuneArrivee_id" required>
             <div id="autocompletionArrivee"></div>
 
         </p>
         <input type="hidden" name="XDEBUG_TRIGGER">
         <p>
-            <input class="InputAddOn-field" type="submit" value="Calculer" />
+            <input id="calculSubmit" class="InputAddOn-field" type="submit" value="Calculer" />
         </p>
     </fieldset>
 </form>
 
 <div id="mapid"></div>
 </section>
-
+<div id="distance"></div>
 <?php if (!empty($_POST)) { ?>
     <p>
         Le plus court chemin entre <?=  "<pan id='nomDepart'>" . $nomCommuneDepart . "</pan>" ?> et <?= "<pan id='nomArrivee'>" . $nomCommuneArrivee . "</pan>" ?> mesure <?= $distance ?>km.
