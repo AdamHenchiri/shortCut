@@ -240,6 +240,24 @@ abstract class AbstractRepository
         return $tab;
     }
 
-
+    public function recupererGidDuNom(string $nomVille)
+    {
+        $requeteSQL = <<<SQL
+        Select gid
+        from noeud_routier 
+        where id_rte500 =
+              (select id_nd_rte
+               from noeud_commune
+               where nom_chf = :nomVilleTag :: Text
+               );
+        SQL;
+        $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($requeteSQL);
+        $pdoStatement->execute(array(
+            "nomVilleTag" => $nomVille,
+        ));
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        $tab = $pdoStatement->fetchAll();
+        return $tab;
+    }
 
 }

@@ -52,7 +52,7 @@ function afficheRoute(tableau, string1, string2) {
     maRequete(string1);
     //Requète sur la ville d'arrivée
     maRequete(string2);
-
+    hideLoader();
 }
 
 //verifie dans un premier temps l'existence de point ou de route sur la map et les effacent si elles existent
@@ -78,7 +78,7 @@ function maRequete2(string1, string2) {
         let tab = JSON.parse(requete.responseText);
         let tableau = [];
         for (let i = 0; i < tab.length; i++) {
-            console.log("tab[" + i + "].geom=" + tab[i].geom);
+            //console.log("tab[" + i + "].geom=" + tab[i].geom);
             tableau.push(JSON.parse(tab[i].geom));
         }
         divDistance.innerText=("Le plus court chemin entre "+string1 + " et "+string2+" mesure "+tab[tab.length - 1].agg_cost+" km.")
@@ -117,10 +117,25 @@ var nomArrivee = document.getElementById("nomCommuneArrivee_id");
 document.querySelector('form').addEventListener('submit', function (event) {
     event.preventDefault();
     console.log("Calcul en cours ...");
+    showLoader();
     if (nomDepart && nomArrivee) {
         let stringDepart = nomDepart.value;
         let stringArrivee = nomArrivee.value;
         maRequete2(stringDepart, stringArrivee);
     }
 });
+
+//pour ajouter la class css show qui affiche le loader
+//pour ajouter la class css blur qui floute la carte
+function showLoader() {
+    document.getElementById("loader").classList.add("show");
+    document.getElementById("mapid").classList.add("blur");
+}
+
+//pour supprimer la class css show qui affiche le loader
+//pour supprimer la class css blur qui floute la carte
+function hideLoader() {
+    document.getElementById("loader").classList.remove("show");
+    document.getElementById("mapid").classList.remove("blur");
+}
 

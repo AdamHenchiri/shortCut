@@ -111,3 +111,21 @@ footer p {
 .InputAddOn-item:last-child {
     border-radius: 0 2px 2px 0;
 }
+
+
+#loader {
+    visibility: hidden;
+}
+
+#loader.show {
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    visibility: visible;
+}
+
+.blur {
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+}

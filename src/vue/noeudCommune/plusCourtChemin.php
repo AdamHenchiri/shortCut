@@ -24,9 +24,5 @@
 
 <div id="mapid"></div>
 </section>
+<div id="loader"><img src="../ressources/img/loading.gif" alt="loader"></div>
 <div id="distance"></div>
-<?php if (!empty($_POST)) { ?>
-    <p>
-        Le plus court chemin entre <?=  "<pan id='nomDepart'>" . $nomCommuneDepart . "</pan>" ?> et <?= "<pan id='nomArrivee'>" . $nomCommuneArrivee . "</pan>" ?> mesure <?= $distance ?>km.
-    </p>
-<?php } ?>
