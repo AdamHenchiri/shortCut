@@ -76,6 +76,51 @@
 
     //recupère le input de départ
     var nomCommuneDepart = document.getElementById("nomCommuneDepart_id");
+
+    var city = "";
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function (position){
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+            fetch(`https://api-adresse.data.gouv.fr/reverse/?lon=${longitude}&lat=${latitude}`)
+                .then(response => response.json())
+                .then(data => {
+                    city = data.features[0].properties.city;
+                    console.log(`La ville est ${city}`);
+                    verifierVille(city);
+                })
+                .catch(error => console.log(error));
+            console.log("latitude : " + latitude + " longitude : " + longitude);
+
+        });
+    }else {
+        console.log("pas géolocalisation");
+    }
+
+    var iconLocalisation = document.getElementById("localisation");
+    function verifierVille(ville){
+        fetch(`controleurFrontal.php?action=villeExist&controleur=noeudCommune&ville=${ville}`)
+            .then(response => response.json())
+            .then(data => {
+                if(data.count === 1){
+                    console.log("la ville exist");
+                    iconLocalisation.style.visibility = "visibible";
+                    iconLocalisation.style.cursor = "pointor";
+
+                    iconLocalisation.addEventListener("click", function (){
+                        nomCommuneDepart.value = ville;
+                        videVilles(liste_ville);
+                    })
+                }
+                else{
+                    console.log("la ville n'exist pas");
+                    iconLocalisation.style.visibility = "hidden";
+                }
+            } )
+            .catch(error => console.log(error));
+    }
+
+
     //Apelle maRequete lorsque l'input est utilisé
     //Le vide ville ne fonctionne pas ici
     nomCommuneDepart.addEventListener("input", function () {

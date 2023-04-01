@@ -19,10 +19,10 @@ class ConnexionBaseDeDonnees
 
     private function __construct()
     {
-        $host = '172.16.21.29';
+        $host = '172.28.224.1';
         $dbname = 'gis';
         $username = 'docker';
-        $password = 'AgzGlu96xxUL2ey7DzTi';
+        $password = '7adb0UQWiszfqWHZpOYS';
         $port = '25432';
 
         $configuration = new Configuration(new ConfigurationBDDPostgreSQL());
