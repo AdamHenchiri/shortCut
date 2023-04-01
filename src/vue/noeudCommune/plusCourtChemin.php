@@ -5,7 +5,7 @@
         <p class="InputAddOn">
             <label class="InputAddOn-item" for="nomCommuneDepart_id">Nom de la commune de départ</label>
             <input class="InputAddOn-field" type="text" value="" placeholder="Ex : Menton" name="nomCommuneDepart" id="nomCommuneDepart_id" required>
-            <img id="localisation" src="../../../ressources/img/my_location_FILL0_wght400_GRAD0_opsz48.png" alt="localisation">
+            <img id="localisation" src="../ressources/img/my_location_FILL0_wght400_GRAD0_opsz48.png" alt="localisation">
                 <div id="autocompletion"></div>
 
 
