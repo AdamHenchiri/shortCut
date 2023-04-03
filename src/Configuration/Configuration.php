@@ -35,7 +35,7 @@ class Configuration
 
     public static function getAbsoluteURL() : string
     {
-        throw new Exception("URL absolue non renseignée !");
+        return "http://localhost:890/sae/web/controleurFrontal.php?";
     }
 
 }

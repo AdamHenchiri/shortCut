@@ -3,6 +3,7 @@
 namespace App\PlusCourtChemin\Modele\Repository;
 
 use App\PlusCourtChemin\Modele\DataObject\AbstractDataObject;
+use http\Encoding\Stream;
 use PDOException;
 
 abstract class AbstractRepository
@@ -162,4 +163,101 @@ abstract class AbstractRepository
             }
         }
     }
+
+    //Recupere les donnes en fonction des paramètres
+    //Retourne un tableau
+    public function selectByName(string $valeurChamp, string $name) {
+
+        $nomTable = $this->getNomTable();
+
+        $sql = "SELECT * FROM $nomTable WHERE $valeurChamp LIKE :valeurNameTag LIMIT 5;";
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($sql);
+
+        $values = array(
+            "valeurNameTag" => "$name%",
+        );
+
+        $pdoStatement->execute($values);
+
+        /*$objets = [];
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $objets[] = $this->construireDepuisTableau($objetFormatTableau);
+        }*/
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        $tabResul= $pdoStatement->fetchAll();
+        return $tabResul;
+
+    }
+
+    //Recupere les donnes geom (coordonnes) ainsi que le champ mis en paramètre en fonction de la ça valeur donnée
+    //Retourne un tableau
+    public function selectGeom(string $valeurChamp, string $name){
+        $nomTable = $this->getNomTable();
+
+        $sql = "SELECT $valeurChamp, ST_AsGeoJSON(geom) FROM $nomTable WHERE $valeurChamp LIKE :valeurNameTag LIMIT 1;";
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($sql);
+
+        $values = array(
+            "valeurNameTag" => "%$name%",
+        );
+
+        $pdoStatement->execute($values);
+
+        /*$objets = [];
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $objets[] = $this->construireDepuisTableau($objetFormatTableau);
+        }*/
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        $tabResul= $pdoStatement->fetchAll();
+        return $tabResul;
+    }
+
+    public function getDonneesChemin(int $comDepartGid, int $comArriveeGid): array
+    {
+        $requeteSQL = <<<SQL
+        SELECT ST_AsGeoJSON(trn.the_geom) as geom, tablaAstar.agg_cost
+        FROM troncon_route_noeuds trn
+        RIGHT JOIN (
+            SELECT *
+            FROM pgr_astar(
+                'SELECT id, source, target, cost, x1, y1, x2, y2 FROM troncon_route_noeuds',
+                :gidDepartTag::bigint,
+                :gidArriveeTag::bigint,
+                false
+            )
+        ) as tablaAstar
+        ON trn.id = tablaAstar.edge;
+        SQL;
+        $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($requeteSQL);
+        $pdoStatement->execute(array(
+            "gidDepartTag" => $comDepartGid,
+            "gidArriveeTag" => $comArriveeGid
+        ));
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        $tab = $pdoStatement->fetchAll();
+        return $tab;
+    }
+
+    public function recupererGidDuNom(string $nomVille)
+    {
+        $requeteSQL = <<<SQL
+        Select gid
+        from noeud_routier 
+        where id_rte500 =
+              (select id_nd_rte
+               from noeud_commune
+               where nom_chf = :nomVilleTag :: Text
+               );
+        SQL;
+        $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($requeteSQL);
+        $pdoStatement->execute(array(
+            "nomVilleTag" => $nomVille,
+        ));
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        $tab = $pdoStatement->fetchAll();
+        return $tab;
+    }
+
 }

@@ -1,68 +1,51 @@
 <?php
 
 namespace App\PlusCourtChemin\Lib;
-
-use App\PlusCourtChemin\Modele\DataObject\NoeudRoutier;
-use App\PlusCourtChemin\Modele\Repository\NoeudRoutierRepository;
+use App\PlusCourtChemin\Controleur\ControleurTronconRouteNoeuds;
+use App\PlusCourtChemin\Modele\Repository\NoeudCommuneRepository;
+use App\PlusCourtChemin\Modele\Repository\TronconRouteNoeudsRepository;
 
 class PlusCourtChemin
 {
-    private array $distances;
+    //tab [ GID => numero ]
+    private float $distances;
+    //tab [ GID => bool ]
     private array $noeudsALaFrontiere;
-
+    private array $tabRoute;
+    private int $noeudRoutierDepartGid;
+    private int $noeudRoutierArriveeGid;
+    /**
+     * @param int $noeudRoutierDepartGid code GID du noeud de route de depart
+     * @param int $noeudRoutierArriveeGid code GID du noeud de route d'arrivee
+     */
     public function __construct(
-        private int $noeudRoutierDepartGid,
-        private int $noeudRoutierArriveeGid
+        private string $communeDepart,
+        private string $communeArrivee
     ) {
+        $noeudCommuneRepository = new NoeudCommuneRepository();
+        $this->noeudRoutierDepartGid= (($noeudCommuneRepository->recupererGidDuNom($this->communeDepart))[0])->gid;
+        $this->noeudRoutierArriveeGid= (($noeudCommuneRepository->recupererGidDuNom($this->communeArrivee))[0])->gid;
     }
 
-    public function calculer(bool $affichageDebug = false): float
+    public function calculer(bool $affichageDebug = false): array
     {
-        $noeudRoutierRepository = new NoeudRoutierRepository();
+        $tronconRouteNoeudsRepository = new TronconRouteNoeudsRepository();
 
         // Distance en km, table indexé par NoeudRoutier::gid
-        $this->distances = [$this->noeudRoutierDepartGid => 0];
+        //$this->distances = [$this->noeudRoutierDepartGid => 0];
+        //$i=0;
 
-        $this->noeudsALaFrontiere[$this->noeudRoutierDepartGid] = true;
-
-        while (count($this->noeudsALaFrontiere) !== 0) {
-            $noeudRoutierGidCourant = $this->noeudALaFrontiereDeDistanceMinimale();
-
-            // Fini
-            if ($noeudRoutierGidCourant === $this->noeudRoutierArriveeGid) {
-                return $this->distances[$noeudRoutierGidCourant];
-            }
-
-            // Enleve le noeud routier courant de la frontiere
-            unset($this->noeudsALaFrontiere[$noeudRoutierGidCourant]);
-
-            /** @var NoeudRoutier $noeudRoutierCourant */
-            $noeudRoutierCourant = $noeudRoutierRepository->recupererParClePrimaire($noeudRoutierGidCourant);
-            $voisins = $noeudRoutierCourant->getVoisins();
-
-            foreach ($voisins as $voisin) {
-                $noeudVoisinGid = $voisin["noeud_routier_gid"];
-                $distanceTroncon = $voisin["longueur"];
-                $distanceProposee = $this->distances[$noeudRoutierGidCourant] + $distanceTroncon;
-
-                if (!isset($this->distances[$noeudVoisinGid]) || $distanceProposee < $this->distances[$noeudVoisinGid]) {
-                    $this->distances[$noeudVoisinGid] = $distanceProposee;
-                    $this->noeudsALaFrontiere[$noeudVoisinGid] = true;
-                }
-            }
+        // Fini
+        if ($this->noeudRoutierArriveeGid === $this->noeudRoutierDepartGid) {
+           $this->distances=0;
         }
+        else{
+            $tabDijkstra = $tronconRouteNoeudsRepository->getDonneesChemin($this->noeudRoutierDepartGid,$this->noeudRoutierArriveeGid);
+            $lastNoeud=$tabDijkstra[count($tabDijkstra)-1];
+            $this->distances = $lastNoeud->agg_cost;
+            $this->tabRoute=$tabDijkstra;
+        }
+        return $this->tabRoute;
     }
 
-    private function noeudALaFrontiereDeDistanceMinimale()
-    {
-        $noeudRoutierDistanceMinimaleGid = -1;
-        $distanceMinimale = PHP_INT_MAX;
-        foreach ($this->noeudsALaFrontiere as $noeudRoutierGid => $valeur) {
-            if ($this->distances[$noeudRoutierGid] < $distanceMinimale) {
-                $noeudRoutierDistanceMinimaleGid = $noeudRoutierGid;
-                $distanceMinimale = $this->distances[$noeudRoutierGid];
-            }
-        }
-        return $noeudRoutierDistanceMinimaleGid;
-    }
 }
