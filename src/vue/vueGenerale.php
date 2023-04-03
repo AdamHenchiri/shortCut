@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title><?= $pagetitle ?></title>
     <link rel="stylesheet" href="../ressources/css/navstyle.css">
+    <link rel="stylesheet" href="../ressources/css/menu.css">
+    <link rel="stylesheet" href="../ressources/css/calcul.css">
+    <link rel="shortcut icon" type="image/png" href="../ressources/img/logo_Sae04.ico"/>
+    <script src="https://kit.fontawesome.com/26e0d024d1.js" crossorigin="anonymous" defer></script>
 </head>
 <body>
     <header>
@@ -23,7 +27,7 @@
                     echo <<<HTML
                     <li>
                         <a href="controleurFrontal.php?action=afficherFormulaireConnexion&controleur=utilisateur">
-                            <img alt="login" src="../ressources/img/enter.png" width="18">
+                            Déconnexion
                         </a>
                     </li>
                     HTML;
@@ -71,7 +75,7 @@
     </main>
     <footer>
         <p>
-            Copyleft Romain Lebreton
+           Site composé par : Sarah Bettinger, Nathan Breton, Kim Harribaud, Adam Henchiri, Sylia Rathier
         </p>
     </footer>
 </body>

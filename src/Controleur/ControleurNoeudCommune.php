@@ -84,4 +84,41 @@ class ControleurNoeudCommune extends ControleurGenerique
 
         ControleurNoeudCommune::afficherVue('vueGenerale.php', $parametres);
     }
+
+    public static function pcc(): void
+    {
+        $parametres = [
+            "pagetitle" => "Plus court chemin",
+            "cheminVueBody" => "noeudCommune/pcc.php",
+        ];
+
+
+        if (!empty($_POST)) {
+            $nomCommuneDepart = $_POST["nomCommuneDepart"];
+            $nomCommuneArrivee = $_POST["nomCommuneArrivee"];
+
+            $noeudCommuneRepository = new NoeudCommuneRepository();
+            /** @var NoeudCommune $noeudCommuneDepart */
+            $noeudCommuneDepart = $noeudCommuneRepository->recupererPar(["nom_comm" => $nomCommuneDepart])[0];
+            /** @var NoeudCommune $noeudCommuneArrivee */
+            $noeudCommuneArrivee = $noeudCommuneRepository->recupererPar(["nom_comm" => $nomCommuneArrivee])[0];
+
+            $noeudRoutierRepository = new NoeudRoutierRepository();
+            $noeudRoutierDepartGid = $noeudRoutierRepository->recupererPar([
+                "id_rte500" => $noeudCommuneDepart->getId_nd_rte()
+            ])[0]->getGid();
+            $noeudRoutierArriveeGid = $noeudRoutierRepository->recupererPar([
+                "id_rte500" => $noeudCommuneArrivee->getId_nd_rte()
+            ])[0]->getGid();
+
+            $pcc = new PlusCourtChemin($noeudRoutierDepartGid, $noeudRoutierArriveeGid);
+            $distance = $pcc->calculer();
+
+            $parametres["nomCommuneDepart"] = $nomCommuneDepart;
+            $parametres["nomCommuneArrivee"] = $nomCommuneArrivee;
+            $parametres["distance"] = $distance;
+        }
+
+        ControleurNoeudCommune::afficherVue('vueGenerale.php', $parametres);
+    }
 }

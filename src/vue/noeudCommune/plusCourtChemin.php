@@ -1,19 +1,25 @@
 <form action="" method="post">
-    <fieldset>
-        <legend>Plus court chemin </legend>
-        <p class="InputAddOn">
-            <label class="InputAddOn-item" for="nomCommuneDepart_id">Nom de la commune de départ</label>
-            <input class="InputAddOn-field" type="text" value="" placeholder="Ex : Menton" name="nomCommuneDepart" id="nomCommuneDepart_id" required>
-        </p>
-        <p class="InputAddOn">
-            <label class="InputAddOn-item" for="nomCommuneArrivee_id">Nom de la commune de départ</label>
-            <input class="InputAddOn-field" type="text" value="" placeholder="Ex : Menton" name="nomCommuneArrivee" id="nomCommuneArrivee_id" required>
-        </p>
+    <div class="container-calcul">
+        <div class="titre-container">
+            <h1 class="titre">Calculez votre chemin </h1>
+            <div class="separateur"></div>
+        </div>
+
+            <input class="InputAddOn-field" type="text" value="" placeholder="Ville de départ ou position actuelle" name="nomCommuneDepart" id="nomCommuneDepart_id" required>
+
+        <i id="arrow" class="fa-solid fa-arrow-down"></i>
+
+            <input class="InputAddOn-field" type="text" value="" placeholder="Destination souhaitée" name="nomCommuneArrivee" id="nomCommuneArrivee_id" required>
+
         <input type="hidden" name="XDEBUG_TRIGGER">
-        <p>
-            <input class="InputAddOn-field" type="submit" value="Calculer" />
-        </p>
-    </fieldset>
+            <input class="button-calcul" type="submit" value="C'est parti !" />
+
+        <div class="titre-container">
+            <h1 class="titre">Résultat du chemin le plus court</h1>
+             <div class="separateur"></div>
+        </div>
+
+    </div>
 </form>
 
 <?php if (!empty($_POST)) { ?>
