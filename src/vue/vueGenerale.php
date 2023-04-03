@@ -36,7 +36,7 @@
                     echo <<<HTML
                     <li>
                         <a href="controleurFrontal.php?action=afficherFormulaireConnexion&controleur=utilisateur">
-                            <img alt="login" src="../ressources/img/enter.png" width="18">
+                            Déconnexion
                         </a>
                     </li>
                     HTML;
