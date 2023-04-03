@@ -7,10 +7,13 @@
             </div>
 
             <input class="InputAddOn-field" type="text" value="" placeholder="Ville de départ ou position actuelle" name="nomCommuneDepart" id="nomCommuneDepart_id" required>
+            <img id="localisation" src="../ressources/img/my_location_FILL0_wght400_GRAD0_opsz48.png" alt="localisation">
+            <div id="autocompletion"></div>
 
             <i id="arrow" class="fa-solid fa-arrow-down"></i>
 
             <input class="InputAddOn-field" type="text" value="" placeholder="Destination souhaitée" name="nomCommuneArrivee" id="nomCommuneArrivee_id" required>
+            <div id="autocompletionArrivee"></div>
 
             <input type="hidden" name="XDEBUG_TRIGGER">
             <input class="button-calcul" type="submit" value="C'est parti !" />
