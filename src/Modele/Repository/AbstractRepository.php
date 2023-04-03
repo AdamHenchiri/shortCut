@@ -164,13 +164,33 @@ abstract class AbstractRepository
         }
     }
 
+    public function selectByName2($name) {
+        try {
+            // préparation de la requête
+            $nomTable = $this->getNomTable();
+            $sql = "SELECT * FROM $nomTable WHERE name LIKE :name_tag LIMIT 5";
+            $req_prep = self::$pdo->prepare($sql);
+            // passage de la valeur de name_tag
+            $values = array("name_tag" => $name."%");
+            // exécution de la requête préparée
+            $req_prep->execute($values);
+            $req_prep->setFetchMode(PDO::FETCH_OBJ);
+            $tabResults = $req_prep->fetchAll();
+            // renvoi du tableau de résultats
+            return $tabResults;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            die("Erreur lors de la recherche dans la base de données.");
+        }
+    }
+
     //Recupere les donnes en fonction des paramètres
     //Retourne un tableau
     public function selectByName(string $valeurChamp, string $name) {
 
         $nomTable = $this->getNomTable();
 
-        $sql = "SELECT * FROM $nomTable WHERE $valeurChamp LIKE :valeurNameTag LIMIT 5;";
+        $sql = "SELECT * FROM $nomTable WHERE $valeurChamp LIKE :valeurNameTag LIMIT 5";
         // Préparation de la requête
         $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($sql);
 
@@ -200,7 +220,7 @@ abstract class AbstractRepository
         $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($sql);
 
         $values = array(
-            "valeurNameTag" => "%$name%",
+            "valeurNameTag" => "$name",
         );
 
         $pdoStatement->execute($values);
@@ -258,6 +278,23 @@ abstract class AbstractRepository
         $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
         $tab = $pdoStatement->fetchAll();
         return $tab;
+    }
+
+    public function verifierVille(string $nomVille){
+        $nomTable = $this->getNomTable();
+
+        $sql = "SELECT COUNT(*) FROM $nomTable WHERE nom_comm =:valeurNameTag;";
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($sql);
+
+        $values = array(
+            "valeurNameTag" => $nomVille,
+        );
+        $pdoStatement->execute($values);
+
+        $pdoStatement->setFetchMode(ConnexionBaseDeDonnees::getPdo()::FETCH_OBJ);
+        $tabResul= $pdoStatement->fetch();
+        return $tabResul;
     }
 
 }
