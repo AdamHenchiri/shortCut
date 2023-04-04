@@ -19,18 +19,18 @@ class ConnexionBaseDeDonnees
 
     private function __construct()
     {
-        $host = '172.28.224.1';
-        $dbname = 'gis';
-        $username = 'docker';
-        $password = '7adb0UQWiszfqWHZpOYS';
-        $port = '25432';
+        $host = '162.38.222.151';
+        $dbname = 'iut';
+        $username = 'harribaudk';
+        $password = '090780266KE';
+
 
         $configuration = new Configuration(new ConfigurationBDDPostgreSQL());
         $configurationBDD = $configuration->getConfigurationBDD();
 
         // Connexion à la base de données
         $this->pdo = new PDO(
-            "pgsql:host=$host;port=$port;dbname=$dbname;user=$username;password=$password"
+            "pgsql:host=$host;dbname=$dbname;user=$username;password=$password"
         );
 
 

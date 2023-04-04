@@ -10,6 +10,10 @@ body{
     margin: 0;
 }
 
+footer{
+    bottom:0;
+}
+
 footer p {
     display: flex;
     justify-content: center;
