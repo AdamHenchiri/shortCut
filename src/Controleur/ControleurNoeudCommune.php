@@ -73,8 +73,14 @@ class ControleurNoeudCommune extends ControleurGenerique
         $tab = $noeudCommuneRepository->selectGeom("nom_comm",$nomCommuneDepart);
 
         echo json_encode($tab);
+    }
 
+    public static function villeExist(){
+        $nomCommuneDepart = $_GET["ville"];
+        $noeudCommuneRepository = new NoeudCommuneRepository();
+        $tab = $noeudCommuneRepository->verifierVille($nomCommuneDepart);
 
+        echo json_encode($tab);
     }
 
 

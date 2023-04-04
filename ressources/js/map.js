@@ -23,6 +23,7 @@ function affichePoint(tableau) {
     let latitude = tableau[0];
     let longitude = tableau[1];
     tabVille = [longitude, latitude];
+    console.log(tabVille);
     coords.push(tabVille);
     JSON.stringify(coords);
     //coords = [[51.509, -0.10], [43.59917865, 3.894125217]];
@@ -75,6 +76,7 @@ function maRequete2(string1, string2) {
     let requete = new XMLHttpRequest();
     requete.open("GET", url, true);
     requete.addEventListener("load", function () {
+        console.log(requete.responseText);
         let tab = JSON.parse(requete.responseText);
         let tableau = [];
         for (let i = 0; i < tab.length; i++) {

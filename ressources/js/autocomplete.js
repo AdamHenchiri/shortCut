@@ -6,7 +6,7 @@
     //5 villes affichees (voir la requete sql)
     //tableau -> nom des ville, divComplete -> indique l'autocompletion pour ville de départ ou d'arrivée
     function afficheVilles(tableau, divComplete) {
-        //console.log(tableau);
+        //console.log(tableau + " tab");
         videVilles(divComplete);
         for (let i = 0; i < tableau.length; i++) {
             let ville = document.createElement("p");
@@ -38,39 +38,49 @@
     }
 
     //Fais une requête pour récupérer les données et appelle le callback mis en paramètre
-    function requeteAJAX(stringVille, callback, action_debut, action_fin) {
-        let url = "controleurFrontal.php?action=autocompletion&controleur=noeudCommune&nomCommuneDepart=" + encodeURIComponent(stringVille);
-        let requete = new XMLHttpRequest();
-        requete.open("GET", url, true);
+async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
+        let req = await fetch("controleurFrontal.php?action=autocompletion&controleur=noeudCommune&nomCommuneDepart=" + encodeURIComponent(stringVille));
+        let data = await req.json();
+        //console.log(data);
+        //let url = "controleurFrontal.php?action=autocompletion&controleur=noeudCommune&nomCommuneDepart=" + encodeURIComponent(stringVille);
+        //let requete = new XMLHttpRequest();
+        //requete.open("GET", url, true);
         //requete.addEventListener("loadstart", action_debut)
-        requete.addEventListener("load", function () {
-            callback(requete);
+        callback(data);
             //action_fin();
-        });
-        requete.send();
+
     }
 
     //Appelle requeteAJAX avec ces parametres
     function maRequeteAJAX(string) {
         //mettre tout le temps la première lettre en majuscule au cas ou il est en minuscule et mettre les autres lettres en minuscules
-        string = string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-        requeteAJAX(string, callback_4, actionDebut, actionFin);
+        //string = string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+        if(string.length === 0 ){
+            let activeElement = document.activeElement;
+            if(activeElement.id === "nomCommuneDepart_id"){
+                videVilles(liste_ville)
+            }
+            if(activeElement.id === "nomCommuneArrivee_id"){
+                videVilles(auto2);
+            }
+        }
+        else {
+            requeteAJAX(string, callback_4, actionDebut, actionFin);
+        }
     }
 
     //Met la requete en Json et appelle l'affichage des villes en fonction de l'input
     function callback_4(req) {
         //tab = tab.map(e => e.name);
         //console.log(tab);
-        document.addEventListener('input', function(event) {
-            let tab = JSON.parse(req.responseText);
-            if (event.target.id === 'nomCommuneDepart_id') {
-                afficheVilles(tab, liste_ville);
-            }
-            if (event.target.id === 'nomCommuneArrivee_id') {
-                afficheVilles(tab, auto2);
-            }
-        });
-
+        let tab = req;
+        let activeElement = document.activeElement;
+        if(activeElement.id === "nomCommuneDepart_id"){
+            afficheVilles(tab, liste_ville);
+        }
+        if(activeElement.id === "nomCommuneArrivee_id"){
+            afficheVilles(tab, auto2);
+        }
 
     }
 
@@ -102,6 +112,7 @@
         fetch(`controleurFrontal.php?action=villeExist&controleur=noeudCommune&ville=${ville}`)
             .then(response => response.json())
             .then(data => {
+
                 if(data.count === 1){
                     console.log("la ville exist");
                     iconLocalisation.style.visibility = "visibible";
@@ -128,21 +139,7 @@
         let stringVille = nomCommuneDepart.value;
         console.log(stringVille);
         console.log(stringVille.length);
-
-        if(stringVille.length === 0 ){
-            console.log('avant');
-            console.log(liste_ville);
-            videVilles(liste_ville);
-            console.log("après");
-            console.log(liste_ville);
-
-
-        }
-        else {
-            console.log("requete");
-            maRequeteAJAX(stringVille)
-        }
-
+        maRequeteAJAX(stringVille);
 
     });
 
@@ -157,7 +154,7 @@
         console.log(stringVille);
         console.log(stringVille.length);
         maRequeteAJAX(stringVille);
-        if (stringVille.length <= 0) {
+        if (stringVille.length === 0) {
             videVilles(auto2);
             auto2.style.borderWidth = "0px";
 
@@ -166,11 +163,19 @@
     });
 
     //vide la liste des villes dans l'autocompletion lorsque l'on click sur une ville
-document.addEventListener("click", function(event){
+liste_ville.addEventListener("click", function(event){
     if(event.target.className === "ma-classe") {
         var targetElement = event.target;
         nomCommuneDepart.value = targetElement.textContent;
         videVilles(liste_ville);
+    }
+});
+
+auto2.addEventListener("click", function(event){
+    if(event.target.className === "ma-classe") {
+        var targetElement = event.target;
+        nomCommuneArrivee.value = targetElement.textContent;
+        videVilles(auto2);
     }
 });
 
