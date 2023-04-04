@@ -1,2 +1,6 @@
 /src/Configuration/Configuration.php/
 /src/Configuration/ConfigurationBDDPostgreSQL.php/
+/.idea/misc.xml
+/.idea/webServers.xml
+/.idea/sshConfigs.xml
+/.idea/deployment.xml

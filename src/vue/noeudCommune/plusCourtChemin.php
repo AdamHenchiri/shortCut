@@ -1,4 +1,4 @@
-<section class="container_calcule">
+<div class="container">
 <form id="formCalcule"  method="post">
         <div class="container-calcul">
             <div class="titre-container">
@@ -7,7 +7,7 @@
             </div>
 
             <input class="InputAddOn-field" type="text" value="" placeholder="Ville de départ ou position actuelle" name="nomCommuneDepart" id="nomCommuneDepart_id" required>
-            <img id="localisation" src="../ressources/img/my_location_FILL0_wght400_GRAD0_opsz48.png" alt="localisation">
+            <i id="localisation" class="fa-solid fa-location-crosshairs"></i>
             <div id="autocompletion"></div>
 
             <i id="arrow" class="fa-solid fa-arrow-down"></i>
@@ -22,10 +22,9 @@
                 <h1 class="titre">Résultat du chemin le plus court</h1>
                 <div class="separateur"></div>
             </div>
-
+            <div id="mapid"></div>
         </div>
     </form>
-<div id="mapid"></div>
-</section>
 <div id="loader"><img src="../ressources/img/loading.gif" alt="loader"></div>
 <div id="distance"></div>
+</div>

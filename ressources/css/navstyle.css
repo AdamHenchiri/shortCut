@@ -53,6 +53,11 @@ footer p {
     border-color: #ebccd1;
 }
 
+.container{
+    display :flex;
+    flex-direction: column;
+}
+
 /* https://philipwalton.github.io/solved-by-flexbox/demos/input-add-ons/ */
 
 #loader {
