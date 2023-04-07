@@ -57,6 +57,12 @@ function afficheRoute(tableau, string1, string2) {
     hideLoader();
 }
 
+/*async function requeteAJAX(stringVille, callback) {
+    let req = await fetch(`./calcul/${string1}/${string2}`);
+    let data = await req.json();
+    callback(data);
+}
+ */
 //verifie dans un premier temps l'existence de point ou de route sur la map et les effacent si elles existent
 //puis envoie une requete avec les noms des villes à l'action donneesRoute du controller TronconRouteNoeuds&nomCommuneDepart avec le nom des villes
 //cette requete renvoie un tableau avec geom(les coordonnees de chaque troncon) et agg_cost (la longeure de chaque troncon)
@@ -114,8 +120,8 @@ var nomDepart = document.getElementById("nomCommuneDepart_id");
 var nomArrivee = document.getElementById("nomCommuneArrivee_id");
 
 
-function verifierVille(ville){
-    fetch(`controleurFrontal.php?action=villeExist&controleur=noeudCommune&ville=${ville}`)
+function verifierVille(nomCommune){
+    fetch(`./villeExist/${nomCommune}`)
         .then(response => response.json())
         .then(data => {
             return data.count === 1;
@@ -128,7 +134,7 @@ function verifierVille(ville){
 // nous utilisons la méthode "preventDefault()" pour empêcher la soumission du formulaire
 // et appelons ensuite notre fonction "maRequete2" avec les noms des villes saisie dans les inputs
 document.querySelector('form').addEventListener('submit', function (event) {
-    if (verifierVille(nomDepart) && verifierVille(nomArrivee)) {
+    if (verifierVille(nomDepart.value) && verifierVille(nomArrivee.value)) {
         event.preventDefault();
         console.log("Calcul en cours ...");
         showLoader();
@@ -137,9 +143,9 @@ document.querySelector('form').addEventListener('submit', function (event) {
             let stringArrivee = nomArrivee.value;
             maRequete2(stringDepart, stringArrivee);
         }
-    }
-    else {
-        alert("Un ou des champs ne sont pas valide")
+    } else {
+        alert("Un ou des champs ne sont pas valide");
+        event.preventDefault();
     }
 });
 

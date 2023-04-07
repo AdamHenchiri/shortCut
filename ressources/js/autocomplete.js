@@ -39,7 +39,7 @@
 
     //Fais une requête pour récupérer les données et appelle le callback mis en paramètre
 async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
-        let req = await fetch("./autocompletion/" +(stringVille));
+        let req = await fetch(`./autocompletion/${stringVille}`);
         let data = await req.json();
         //console.log(data);
         //let url = "controleurFrontal.php?action=autocompletion&controleur=noeudCommune&nomCommuneDepart=" + encodeURIComponent(stringVille);
@@ -89,7 +89,7 @@ async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
     //recupère le input de départ
     var nomCommuneDepart = document.getElementById("nomCommuneDepart_id");
 
-    var ville = "";
+    var nomCommune = "";
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function (position){
             let latitude = position.coords.latitude;
@@ -97,9 +97,9 @@ async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
             fetch(`https://api-adresse.data.gouv.fr/reverse/?lon=${longitude}&lat=${latitude}`)
                 .then(response => response.json())
                 .then(data => {
-                    ville = data.features[0].properties.city;
-                    console.log(`La ville est ${ville}`);
-                    fetch(`./villeExist/"${ville}`)
+                    nomCommune = data.features[0].properties.city;
+                    console.log(`La ville est ${nomCommune}`);
+                    fetch(`./villeExist/${nomCommune}`)
                         .then(response => response.json())
                         .then(data => {
                             if(data.count === 1){
@@ -108,7 +108,7 @@ async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
                                 iconLocalisation.style.cursor = "pointor";
                                 iconLocalisation.addEventListener("click", function (){
                                     console.log("hi");
-                                    nomCommuneDepart.value = ville;
+                                    nomCommuneDepart.value = nomCommune;
                                     videVilles(liste_ville);
                                 })
                             }
