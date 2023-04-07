@@ -84,6 +84,8 @@ async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
 
     }
 
+
+    var iconLocalisation = document.getElementById("localisation");
     //recupère le input de départ
     var nomCommuneDepart = document.getElementById("nomCommuneDepart_id");
 
@@ -97,7 +99,25 @@ async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
                 .then(data => {
                     city = data.features[0].properties.city;
                     console.log(`La ville est ${city}`);
-                    verifierVille(city);
+                    fetch(`controleurFrontal.php?action=villeExist&controleur=noeudCommune&ville=${city}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data.count === 1){
+                                console.log("la ville exist");
+                                iconLocalisation.style.visibility = "visible";
+                                iconLocalisation.style.cursor = "pointor";
+                                iconLocalisation.addEventListener("click", function (){
+                                    console.log("hi");
+                                    nomCommuneDepart.value = city;
+                                    videVilles(liste_ville);
+                                })
+                            }
+                            else{
+                                console.log("la ville n'exist pas");
+                                iconLocalisation.style.visibility = "hidden";
+                            }
+                        })
+                        .catch(error => console.log(error));
                 })
                 .catch(error => console.log(error));
             console.log("latitude : " + latitude + " longitude : " + longitude);
@@ -107,29 +127,7 @@ async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
         console.log("pas géolocalisation");
     }
 
-    var iconLocalisation = document.getElementById("localisation");
-    function verifierVille(ville){
-        fetch(`controleurFrontal.php?action=villeExist&controleur=noeudCommune&ville=${ville}`)
-            .then(response => response.json())
-            .then(data => {
 
-                if(data.count === 1){
-                    console.log("la ville exist");
-                    iconLocalisation.style.visibility = "visibible";
-                    iconLocalisation.style.cursor = "pointor";
-
-                    iconLocalisation.addEventListener("click", function (){
-                        nomCommuneDepart.value = ville;
-                        videVilles(liste_ville);
-                    })
-                }
-                else{
-                    console.log("la ville n'exist pas");
-                    iconLocalisation.style.visibility = "hidden";
-                }
-            } )
-            .catch(error => console.log(error));
-    }
 
 
     //Apelle maRequete lorsque l'input est utilisé

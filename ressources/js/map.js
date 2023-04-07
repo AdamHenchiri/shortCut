@@ -113,19 +113,36 @@ var nomDepart = document.getElementById("nomCommuneDepart_id");
 var nomArrivee = document.getElementById("nomCommuneArrivee_id");
 
 
+function verifierVille(ville){
+    fetch(`controleurFrontal.php?action=villeExist&controleur=noeudCommune&ville=${ville}`)
+        .then(response => response.json())
+        .then(data => {
+            return data.count === 1;
+        } )
+        .catch(error => console.log(error));
+}
+
+
 //Lors du click sur le bouton submit du formulaire,
 // nous utilisons la méthode "preventDefault()" pour empêcher la soumission du formulaire
 // et appelons ensuite notre fonction "maRequete2" avec les noms des villes saisie dans les inputs
 document.querySelector('form').addEventListener('submit', function (event) {
-    event.preventDefault();
-    console.log("Calcul en cours ...");
-    showLoader();
-    if (nomDepart && nomArrivee) {
-        let stringDepart = nomDepart.value;
-        let stringArrivee = nomArrivee.value;
-        maRequete2(stringDepart, stringArrivee);
+    if (verifierVille(nomDepart) && verifierVille(nomArrivee)) {
+        event.preventDefault();
+        console.log("Calcul en cours ...");
+        showLoader();
+        if (nomDepart && nomArrivee) {
+            let stringDepart = nomDepart.value;
+            let stringArrivee = nomArrivee.value;
+            maRequete2(stringDepart, stringArrivee);
+        }
+    }
+    else {
+        alert("Un ou des champs ne sont pas valide")
     }
 });
+
+
 
 //pour ajouter la class css show qui affiche le loader
 //pour ajouter la class css blur qui floute la carte

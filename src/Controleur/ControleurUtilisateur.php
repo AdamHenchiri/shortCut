@@ -19,7 +19,7 @@ class ControleurUtilisateur extends ControleurGenerique
     }
 
 
-   /* public static function afficherListe(): void
+   public static function afficherListe(): void
     {
         $utilisateurs = (new UtilisateurRepository())->recuperer();     //appel au modèle pour gerer la BD
         ControleurUtilisateur::afficherVue('vueGenerale.php', [
@@ -28,7 +28,7 @@ class ControleurUtilisateur extends ControleurGenerique
             "cheminVueBody" => "utilisateur/liste.php"
         ]);
     }
-*/
+
     public static function afficherDetail(): void
     {
         if (isset($_REQUEST['login'])) {
