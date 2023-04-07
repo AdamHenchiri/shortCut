@@ -120,22 +120,23 @@ var nomDepart = document.getElementById("nomCommuneDepart_id");
 var nomArrivee = document.getElementById("nomCommuneArrivee_id");
 
 
-function verifierVille(nomCommune){
-    fetch(`./villeExist/${nomCommune}`)
-        .then(response => response.json())
-        .then(data => {
-            return data.count === 1;
-        } )
-        .catch(error => console.log(error));
+async function verifierVille(nomCommune){
+    try {
+        let req =  await fetch(`./villeExist/${nomCommune}`)
+        let data = await req.json();
+        return (data.count === 1);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
 //Lors du click sur le bouton submit du formulaire,
 // nous utilisons la méthode "preventDefault()" pour empêcher la soumission du formulaire
 // et appelons ensuite notre fonction "maRequete2" avec les noms des villes saisie dans les inputs
-document.querySelector('form').addEventListener('submit', function (event) {
-    if (verifierVille(nomDepart.value) && verifierVille(nomArrivee.value)) {
-        event.preventDefault();
+document.querySelector('form').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    if (await verifierVille(nomDepart.value) && await verifierVille(nomArrivee.value)) {
         console.log("Calcul en cours ...");
         showLoader();
         if (nomDepart && nomArrivee) {
