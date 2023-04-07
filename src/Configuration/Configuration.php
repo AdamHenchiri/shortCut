@@ -35,7 +35,7 @@ class Configuration
 
     public static function getAbsoluteURL() : string
     {
-        return "http://localhost:890/sae/web/controleurFrontal.php?";
+        return "http://localhost:890/sae/web/controleurFrontal.php";
     }
 
 }

@@ -8,7 +8,7 @@ use PDO;
 class ConfigurationBDDPostgreSQL implements ConfigurationBDDInterface
 {
     private string $nomBDD = "iut";
-    private string $hostname = "162.38.22.142";
+    private string $hostname = "162.38.222.142";
 
 
     //private string $nomBDD = "iut";

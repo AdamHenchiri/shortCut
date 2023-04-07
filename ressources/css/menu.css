@@ -22,4 +22,10 @@ li a {
     color: #E0E0E0;
     font-family: font1;
     font-weight: bold;
+    transition-duration: 0.2s;
+}
+
+li a:hover{
+    color: white;
+    transition-duration: 0.2s;
 }
