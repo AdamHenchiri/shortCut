@@ -13,7 +13,7 @@
                 <input class="button-connexion" type="submit" value="Envoyer"/>
             </p>
 
-                <a class="lien-creer-compte" href="controleurFrontal.php?action=afficherFormulaireCreation&controleur=utilisateur">Créer un compte</a>
+                <a class="lien-creer-compte" href="./creation">Créer un compte</a>
 
         </div>
     </form>

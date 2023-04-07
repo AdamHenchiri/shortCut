@@ -1,7 +1,7 @@
 <?php
 
 echo <<<HTML
-<a href="?action=plusCourtChemin&controleur=noeudCommune">Calculer un plus court chemin</a>
+<a href="./calcul">Calculer un plus court chemin</a>
 
 <h3>Liste des noeuds communes :</h3>
 <ul>

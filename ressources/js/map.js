@@ -26,7 +26,7 @@ function affichePoint(tableau) {
     console.log(tabVille);
     coords.push(tabVille);
     JSON.stringify(coords);
-    //coords = [[51.509, -0.10], [43.59917865, 3.894125217]];
+    //coords = [[51.509, -0.10]];
     for (var i = 0; i < coords.length; i++) {
         marker.push(new L.Marker(coords[i]));
         mymap.addLayer(marker[marker.length - 1]);
@@ -53,6 +53,7 @@ function afficheRoute(tableau, string1, string2) {
     maRequete(string1);
     //Requète sur la ville d'arrivée
     maRequete(string2);
+
     hideLoader();
 }
 
@@ -72,18 +73,18 @@ function maRequete2(string1, string2) {
         console.log(polyline.length);
     }
 
-    let url = "controleurFrontal.php?action=donneesRoute&controleur=TronconRouteNoeuds&nomCommuneDepart=" + encodeURIComponent(string1) + "&nomCommuneArrivee=" + encodeURIComponent(string2);
+    let url = "./calcul/" + (string1) + "/" + (string2);
     let requete = new XMLHttpRequest();
     requete.open("GET", url, true);
     requete.addEventListener("load", function () {
-        console.log(requete.responseText);
+       // console.log(requete.responseText);
         let tab = JSON.parse(requete.responseText);
         let tableau = [];
         for (let i = 0; i < tab.length; i++) {
             //console.log("tab[" + i + "].geom=" + tab[i].geom);
             tableau.push(JSON.parse(tab[i].geom));
         }
-        divDistance.innerText=("Le plus court chemin entre "+string1 + " et "+string2+" mesure "+tab[tab.length - 1].agg_cost+" km.")
+        divDistance.innerText=("Le plus court chemin entre "+string1 + " et "+string2+" mesure "+parseFloat(tab[tab.length - 1].agg_cost).toFixed(3)+" km.")
         console.log("distance = " + tab[tab.length - 1].agg_cost);
         afficheRoute(tableau, string1, string2);
     });
@@ -95,7 +96,7 @@ function maRequete2(string1, string2) {
 //Recupère les données (coordonnées) grâce à l'url et appelle la fonction affichePoint grâce aux coordonnées
 //Methide GET
 function maRequete(string) {
-    let url = "controleurFrontal.php?action=donneesCarte&controleur=noeudCommune&nomCommuneDepart=" + encodeURIComponent(string);
+    let url = "./donneesCarte/"+(string);
     let requete = new XMLHttpRequest();
     requete.open("GET", url, true);
     requete.addEventListener("load", function () {
@@ -156,5 +157,14 @@ function showLoader() {
 function hideLoader() {
     document.getElementById("loader").classList.remove("show");
     document.getElementById("mapid").classList.remove("blur");
+}
+
+function adaptZoom (){
+    // Création d'un objet LatLngBounds à partir des marqueurs et de la polyline
+    var bounds = L.latLngBounds([marker[0].getLatLng(), marker[1].getLatLng()]);
+    bounds.extend(polyline.getBounds());
+
+    // Zoom sur les limites
+    mymap.fitBounds(bounds);
 }
 

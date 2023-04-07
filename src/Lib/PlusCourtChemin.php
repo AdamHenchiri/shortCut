@@ -47,5 +47,4 @@ class PlusCourtChemin
         }
         return $this->tabRoute;
     }
-
 }

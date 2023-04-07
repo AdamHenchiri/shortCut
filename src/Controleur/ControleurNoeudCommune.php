@@ -30,7 +30,7 @@ class ControleurNoeudCommune extends ControleurGenerique
     {
         if (!isset($_REQUEST['gid'])) {
             MessageFlash::ajouter("danger", "Immatriculation manquante.");
-            ControleurNoeudCommune::rediriger("noeudCommune", "afficherListe");
+            ControleurNoeudCommune::rediriger("afficherListeCommune");
         }
 
         $gid = $_REQUEST['gid'];
@@ -38,7 +38,7 @@ class ControleurNoeudCommune extends ControleurGenerique
 
         if ($noeudCommune === null) {
             MessageFlash::ajouter("warning", "gid inconnue.");
-            ControleurNoeudCommune::rediriger("noeudCommune", "afficherListe");
+            ControleurNoeudCommune::rediriger( "afficherListeCommune");
         }
 
         ControleurNoeudCommune::afficherVue('vueGenerale.php', [
@@ -58,27 +58,24 @@ class ControleurNoeudCommune extends ControleurGenerique
     }
 
 
-    public static function autocompletion(){
-        $nomCommuneDepart = $_GET["nomCommuneDepart"];
+    public static function autocompletion($nomCommune){
         $noeudCommuneRepository = new NoeudCommuneRepository();
-        $tab = $noeudCommuneRepository->selectByName("nom_comm",$nomCommuneDepart);
+        $tab = $noeudCommuneRepository->selectByName("nom_comm",$nomCommune);
 
         echo json_encode($tab);
 
     }
 
-    public static function donneesCarte(){
-        $nomCommuneDepart = $_GET["nomCommuneDepart"];
+    public static function donneesCarte($nomCommune){
         $noeudCommuneRepository = new NoeudCommuneRepository();
-        $tab = $noeudCommuneRepository->selectGeom("nom_comm",$nomCommuneDepart);
+        $tab = $noeudCommuneRepository->selectGeom("nom_comm",$nomCommune);
 
         echo json_encode($tab);
     }
 
-    public static function villeExist(){
-        $nomCommuneDepart = $_GET["ville"];
+    public static function villeExist($nomCommune){
         $noeudCommuneRepository = new NoeudCommuneRepository();
-        $tab = $noeudCommuneRepository->verifierVille($nomCommuneDepart);
+        $tab = $noeudCommuneRepository->verifierVille($nomCommune);
 
         echo json_encode($tab);
     }

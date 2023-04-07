@@ -39,7 +39,7 @@
 
     //Fais une requête pour récupérer les données et appelle le callback mis en paramètre
 async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
-        let req = await fetch("controleurFrontal.php?action=autocompletion&controleur=noeudCommune&nomCommuneDepart=" + encodeURIComponent(stringVille));
+        let req = await fetch("./autocompletion/" +(stringVille));
         let data = await req.json();
         //console.log(data);
         //let url = "controleurFrontal.php?action=autocompletion&controleur=noeudCommune&nomCommuneDepart=" + encodeURIComponent(stringVille);
@@ -89,7 +89,7 @@ async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
     //recupère le input de départ
     var nomCommuneDepart = document.getElementById("nomCommuneDepart_id");
 
-    var city = "";
+    var ville = "";
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function (position){
             let latitude = position.coords.latitude;
@@ -97,9 +97,9 @@ async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
             fetch(`https://api-adresse.data.gouv.fr/reverse/?lon=${longitude}&lat=${latitude}`)
                 .then(response => response.json())
                 .then(data => {
-                    city = data.features[0].properties.city;
-                    console.log(`La ville est ${city}`);
-                    fetch(`controleurFrontal.php?action=villeExist&controleur=noeudCommune&ville=${city}`)
+                    ville = data.features[0].properties.city;
+                    console.log(`La ville est ${ville}`);
+                    fetch(`./villeExist/"${ville}`)
                         .then(response => response.json())
                         .then(data => {
                             if(data.count === 1){
@@ -108,7 +108,7 @@ async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
                                 iconLocalisation.style.cursor = "pointor";
                                 iconLocalisation.addEventListener("click", function (){
                                     console.log("hi");
-                                    nomCommuneDepart.value = city;
+                                    nomCommuneDepart.value = ville;
                                     videVilles(liste_ville);
                                 })
                             }
@@ -126,8 +126,6 @@ async function requeteAJAX(stringVille, callback, action_debut, action_fin) {
     }else {
         console.log("pas géolocalisation");
     }
-
-
 
 
     //Apelle maRequete lorsque l'input est utilisé

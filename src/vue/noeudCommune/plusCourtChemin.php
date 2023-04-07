@@ -19,12 +19,11 @@
             <input class="button-calcul" type="submit" value="C'est parti !" />
 
             <div class="titre-container">
-                <h1 class="titre">Résultat du chemin le plus court</h1>
+                <div id="distance" class="titre"></div>
                 <div class="separateur"></div>
             </div>
             <div id="mapid"></div>
+            <div id="loader" class="loader"></div>
         </div>
     </form>
-<div id="loader"><img src="../ressources/img/loading.gif" alt="loader"></div>
-<div id="distance"></div>
 </div>

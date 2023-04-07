@@ -4,3 +4,5 @@
 /.idea/webServers.xml
 /.idea/sshConfigs.xml
 /.idea/deployment.xml
+/vendor/
+/composer.lock

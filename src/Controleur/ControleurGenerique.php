@@ -2,6 +2,7 @@
 
 namespace App\PlusCourtChemin\Controleur;
 
+use App\PlusCourtChemin\Lib\Conteneur;
 use App\PlusCourtChemin\Lib\MessageFlash;
 
 class ControleurGenerique {
@@ -14,9 +15,9 @@ class ControleurGenerique {
     }
 
     // https://stackoverflow.com/questions/768431/how-do-i-make-a-redirect-in-php
-    protected static function rediriger(string $controleur = "", string $action = "", array $query = []) : void
+    protected static function rediriger(string $nom = "", ?array $query = []) : void
     {
-        $queryString = [];
+        /*$queryString = [];
         if ($action != "") {
             $queryString[] = "action=" . rawurlencode($action);
         }
@@ -27,7 +28,15 @@ class ControleurGenerique {
             $name = rawurldecode($name);
             $value = rawurldecode($value);
             $queryString[] = "$name=$value";
+        }*/
+        $generateur = Conteneur::recupererService("generateur");
+
+        if (!empty($query)) {
+            $queryString = $generateur->generate($nom, [$query[0] => $query[1]]);
+        }else{
+            $queryString = $generateur->generate($nom);
         }
+
         $url = "Location: ./controleurFrontal.php?" . join("&", $queryString);
         header($url);
         exit();

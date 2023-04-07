@@ -1,12 +1,21 @@
+<?php
+use App\PlusCourtChemin\Lib\Conteneur;
+use App\PlusCourtChemin\Lib\ConnexionUtilisateur;
+
+/** @var UrlGenerator $generateurUrl */
+$generateurUrl = Conteneur::recupererService("generateurUrl");
+/** @var UrlHelper $assistantUrl */
+$assistantUrl = Conteneur::recupererService("assistantUrl");
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title><?= $pagetitle ?></title>
-    <link rel="stylesheet" href="../ressources/css/navstyle.css">
-    <link rel="stylesheet" href="../ressources/css/completion.css">
-    <link rel="stylesheet" href="../ressources/css/carte.css">
-    <link rel="stylesheet" href="../ressources/css/connexion.css">
+    <link rel="stylesheet" href=<?=rawurldecode($assistantUrl->getAbsoluteUrl("../ressources/css/navstyle.css")) ?>>
+    <link rel="stylesheet" href=<?= rawurldecode($assistantUrl->getAbsoluteUrl("../ressources/css/completion.css")) ?>>
+    <link rel="stylesheet" href=<?= rawurldecode($assistantUrl->getAbsoluteUrl("../ressources/css/carte.css")) ?>>
+    <link rel="stylesheet" href=<?= rawurldecode($assistantUrl->getAbsoluteUrl("../ressources/css/connexion.css")) ?>>
     <link rel="stylesheet" href="../ressources/css/inscription.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
@@ -25,23 +34,22 @@
         <nav>
             <ul>
                 <li>
-                    <a href="controleurFrontal.php?action=afficherListe&controleur=utilisateur">Utilisateurs</a>
+                    <a href=<?= $generateurUrl->generate("afficherListeUtilisateur") ?>>Utilisateurs</a>
                 </li>
                 <li>
-                    <a href="controleurFrontal.php?action=afficherListe&controleur=noeudCommune">Communes</a>
+                    <a href=<?= $generateurUrl->generate("afficherListeCommune") ?>>Communes</a>
                 </li>
                 <?php
-
-                use App\PlusCourtChemin\Lib\ConnexionUtilisateur;
-
                 if (!ConnexionUtilisateur::estConnecte()) {
-                    echo <<<HTML
-                    <li>
-                        <a href="controleurFrontal.php?action=afficherFormulaireConnexion&controleur=utilisateur">
-                            Déconnexion
+                    echo "
+                    <li> 
+                        <a href=
+                    " . ($generateurUrl->generate("afficherFormulaireConnexion")) .
+                     " >
+                            Connexion
                         </a>
                     </li>
-                    HTML;
+                   ";
                 } else {
                     $loginHTML = htmlspecialchars(ConnexionUtilisateur::getLoginUtilisateurConnecte());
                     $loginURL = rawurlencode(ConnexionUtilisateur::getLoginUtilisateurConnecte());
