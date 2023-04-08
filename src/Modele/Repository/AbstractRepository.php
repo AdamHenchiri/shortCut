@@ -269,7 +269,7 @@ abstract class AbstractRepository
               (select id_nd_rte
                from noeud_commune
                where nom_comm = :nomVilleTag :: Text
-               );
+                LIMIT 1);
         SQL;
         $pdoStatement = ConnexionBaseDeDonnees::getPdo()->prepare($requeteSQL);
         $pdoStatement->execute(array(
