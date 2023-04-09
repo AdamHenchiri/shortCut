@@ -94,7 +94,7 @@ $assistantUrl = Conteneur::recupererService("assistantUrl");
     </main>
     <footer>
         <p>
-            Copyleft Romain Lebreton
+            Site crée par : Bettinger Sarah, Breton Nathan, Harribaud Kim, Hencheri Adam, Rathier Sylia
         </p>
     </footer>
 </body>

@@ -30,6 +30,6 @@
             <p class="InputAddOn">
                 <input class="button-connexion" type="submit" value="S'inscrire" />
             </p>
-            <a class="lien-creer-compte" href="controleurFrontal.php?action=afficherFormulaireConnexion&controleur=utilisateur">Déjà inscrit ?</a>
+            <a class="lien-creer-compte" href="./connexion">Déjà inscrit ?</a>
     </form>
 </div>

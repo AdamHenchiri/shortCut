@@ -6,7 +6,7 @@
 }
 
 .separateur{
-    width: 80%;
+    width: 100%;
     background-color: #646464;
     height: 1px;
 }
@@ -23,10 +23,10 @@
 .titre-container{
     margin-top: 40px;
     margin-bottom: 40px;
-    width: 100%;
     display: flex;
     flex-direction: column;
-    padding-left: 20%;
+    width: 60%;
+    text-align: center;
 }
 
 #arrow{
@@ -65,4 +65,31 @@
 
 .button-calcul:hover{
     opacity: 0.8;
+}
+
+.localisation{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+#localisation{
+    color: white;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#localisation2{
+    visibility: hidden;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+#localisation:hover{
+    cursor: pointer;
 }
