@@ -70,7 +70,15 @@ class RouteurURL
         $route = new Route("/creation", [
             "_controller" => "\App\PlusCourtChemin\Controleur\ControleurUtilisateur::afficherFormulaireCreation",
         ]);
+        $route->setMethods(["GET"]);
         $routes->add("afficherFormulaireCreation", $route);
+
+        //Route creation, controleur ControleurUtilisateur
+        $route = new Route("/creation", [
+            "_controller" => "\App\PlusCourtChemin\Controleur\ControleurUtilisateur::creerDepuisFormulaire",
+        ]);
+        $route->setMethods(["POST"]);
+        $routes->add("creation", $route);
 
         //Route autocompletion, controleur ControleurNoeudCommune
         $route = new Route("/autocompletion/{nomCommune}", [
@@ -92,6 +100,14 @@ class RouteurURL
         ]);
         $route->setMethods(["GET"]);
         $routes->add("villeExist", $route);
+
+        //Route afficherDetail, controleur ControleurNoeudCommune
+        $route = new Route("/afficherDetail/{gidCommune}", [
+            "_controller" => "\App\PlusCourtChemin\Controleur\ControleurNoeudCommune::afficherDetail",
+        ]);
+        $route->setMethods(["GET"]);
+        $routes->add("afficherDetail", $route);
+
 
         $contexteRequete = (new RequestContext())->fromRequest($requete);
 
