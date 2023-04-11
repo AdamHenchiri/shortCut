@@ -26,6 +26,7 @@ $assistantUrl = Conteneur::recupererService("assistantUrl");
 
     <link rel="stylesheet" href="../ressources/css/menu.css">
     <link rel="stylesheet" href="../ressources/css/calcul.css">
+    <link rel="stylesheet" href="../ressources/css/commune.css">
     <link rel="shortcut icon" type="image/png" href="../ressources/img/logo_Sae04.ico"/>
     <script src="https://kit.fontawesome.com/26e0d024d1.js" crossorigin="anonymous" defer></script>
 </head>

@@ -1,16 +1,18 @@
 <?php
 
 echo <<<HTML
-<a href="./calcul">Calculer un plus court chemin</a>
+<div class="container-commune-titre">
+<a class="button-lien-calcul" href="./calcul">Calculer un plus court chemin</a>
 
-<h3>Liste des noeuds communes :</h3>
-<ul>
+<h1 class="titre1">Liste des noeuds communes :</h1>
+</div>
 HTML;
-
+echo '<div class="container-commune">';
 foreach ($noeudsCommunes as $noeudCommune) {
     echo '<li>';
     require __DIR__ . "/detail.php";
-    echo " <a href=\"?action=afficherDetail&controleur=noeudCommune&gid={$noeudCommune->getGid()}\">(Détail)</a>";
+
     echo '</li>';
 }
-echo "</ul>\n";
+
+echo '</div>';
