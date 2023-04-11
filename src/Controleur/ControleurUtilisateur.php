@@ -224,20 +224,20 @@ class ControleurUtilisateur extends ControleurGenerique
 
     public static function connecter(): void
     {
-        if (!(isset($_REQUEST['login']) && isset($_REQUEST['mdp']))) {
+        if (!(isset($_POST['login']) && isset($_POST['mdp']))) {
             MessageFlash::ajouter("danger", "Login ou mot de passe manquant.");
             ControleurUtilisateur::rediriger("afficherFormulaireConnexion");
         }
         $utilisateurRepository = new UtilisateurRepository();
         /** @var Utilisateur $utilisateur */
-        $utilisateur = $utilisateurRepository->recupererParClePrimaire($_REQUEST["login"]);
+        $utilisateur = $utilisateurRepository->recupererParClePrimaire($_POST["login"]);
 
         if ($utilisateur == null) {
             MessageFlash::ajouter("warning", "Login inconnu.");
             ControleurUtilisateur::rediriger("afficherFormulaireConnexion");
         }
 
-        if (!MotDePasse::verifier($_REQUEST["mdp"], $utilisateur->getMdpHache())) {
+        if (!MotDePasse::verifier($_POST["mdp"], $utilisateur->getMdpHache())) {
             MessageFlash::ajouter("warning", "Mot de passe incorrect.");
             ControleurUtilisateur::rediriger("afficherFormulaireConnexion");
         }
@@ -249,7 +249,7 @@ class ControleurUtilisateur extends ControleurGenerique
 
         ConnexionUtilisateur::connecter($utilisateur->getLogin());
         MessageFlash::ajouter("success", "Connexion effectuée.");
-        ControleurUtilisateur::rediriger("afficherDetail", ["login" => $_REQUEST["login"]]);
+        ControleurUtilisateur::rediriger("afficherDetail", ["login" => $_POST["login"]]);
     }
 
     public static function deconnecter(): void
