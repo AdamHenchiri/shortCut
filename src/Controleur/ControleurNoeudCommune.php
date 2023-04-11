@@ -26,14 +26,14 @@ class ControleurNoeudCommune extends ControleurGenerique
         ]);
     }
 
-    public static function afficherDetail(): void
+    public static function afficherDetail($gidCommune): void
     {
-        if (!isset($_REQUEST['gid'])) {
+        if (!isset($gidCommune)) {
             MessageFlash::ajouter("danger", "Immatriculation manquante.");
             ControleurNoeudCommune::rediriger("afficherListeCommune");
         }
 
-        $gid = $_REQUEST['gid'];
+        $gid = $gidCommune;
         $noeudCommune = (new NoeudCommuneRepository())->recupererParClePrimaire($gid);
 
         if ($noeudCommune === null) {

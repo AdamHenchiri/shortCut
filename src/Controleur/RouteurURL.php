@@ -93,6 +93,14 @@ class RouteurURL
         $route->setMethods(["GET"]);
         $routes->add("villeExist", $route);
 
+        //Route afficherDetail, controleur ControleurNoeudCommune
+        $route = new Route("/afficherDetail/{gidCommune}", [
+            "_controller" => "\App\PlusCourtChemin\Controleur\ControleurNoeudCommune::afficherDetail",
+        ]);
+        $route->setMethods(["GET"]);
+        $routes->add("afficherDetail", $route);
+
+
         $contexteRequete = (new RequestContext())->fromRequest($requete);
 
         $associateurUrl = new UrlMatcher($routes, $contexteRequete);
