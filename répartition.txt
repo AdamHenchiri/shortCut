@@ -1,0 +1,5 @@
+RATHIER SYLIA 26% : Map(point sur la map), AJAX(autocompletion), API externe (Géolocalisation des utilisateur) 
+HENCHIRI ADAM 28% : Implementation de la bibliothèque Pg_routing, montage du serveur web et bdd local sur docker, optimisation du code, ajout d'un loader, ajout du chemin sur la map à l'aide de sylia  
+Harribaud Kim 20% : Design du site sur figma, Mise en place du style du style à partir de figma (HTML, CSS)
+BRETON NATHAN 5% : Résumé sur le rapport, tentative d'installer kcachegrind en local, tentative d'omplementation de test
+BETTINGER SARAH 20% : Rédaction de la majeur partie du rapport, Ajout de la table utilisateur 
