@@ -24,9 +24,6 @@
     font-family: font1;
 }
 
-.hidden{
-    visibility: hidden;
-}
 
 .container-commune-titre{
     display: flex;
