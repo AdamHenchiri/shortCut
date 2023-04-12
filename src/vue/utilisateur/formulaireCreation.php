@@ -1,5 +1,15 @@
+<?php
+use App\PlusCourtChemin\Lib\Conteneur;
+use App\PlusCourtChemin\Lib\ConnexionUtilisateur;
+
+/** @var UrlGenerator $generateurUrl */
+$generateur = Conteneur::recupererService("generateurUrl");
+/** @var UrlHelper $assistantUrl */
+$assistant = Conteneur::recupererService("assistantUrl");
+?>
+
 <div>
-    <form method="<?= $method ?>" action="controleurFrontal.php">
+    <form method="<?= $method ?>" action=<?= $generateur->generate("creation") ?> enctype="multipart/form-data">
         <div class="container-inscription">
             <h1 class="titre">Inscription</h1>
                 <input class="InputAddOn-field" type="text" value="" placeholder="Login" name="login" id="login_id" required>
@@ -16,7 +26,6 @@
 
             <?php
 
-            use App\PlusCourtChemin\Lib\ConnexionUtilisateur;
 
             if (ConnexionUtilisateur::estAdministrateur()) {
             ?>

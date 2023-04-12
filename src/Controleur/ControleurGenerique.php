@@ -29,7 +29,7 @@ class ControleurGenerique {
             $value = rawurldecode($value);
             $queryString[] = "$name=$value";
         }*/
-        $generateur = Conteneur::recupererService("generateur");
+        $generateur = Conteneur::recupererService("generateurUrl");
 
         if (!empty($query)) {
             $queryString = $generateur->generate($nom, [$query[0] => $query[1]]);
@@ -37,7 +37,7 @@ class ControleurGenerique {
             $queryString = $generateur->generate($nom);
         }
 
-        $url = "Location: ./controleurFrontal.php?" . join("&", $queryString);
+        $url = "Location: " .  $queryString;
         header($url);
         exit();
     }

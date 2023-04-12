@@ -1,5 +1,14 @@
+<?php
+use App\PlusCourtChemin\Lib\Conteneur;
+use App\PlusCourtChemin\Lib\ConnexionUtilisateur;
+
+/** @var UrlGenerator $generateurUrl */
+$generateur = Conteneur::recupererService("generateurUrl");
+/** @var UrlHelper $assistantUrl */
+$assistant = Conteneur::recupererService("assistantUrl");
+?>
 <div>
-    <form method="<?= $method ?>" action="controleurFrontal.php">
+    <form method="<?= $method ?>" action=<?= $generateur->generate("connecter") ?> >
 
         <div class="container-connexion">
             <h1 class="titre">Connexion</h1>
