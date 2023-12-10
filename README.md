@@ -8,4 +8,4 @@ Plus d'informations sur la page http://romainlebreton.github.io/R.4.01-Developpe
 
 pour l'installation de la bdd voici un lien vers notre tuto : https://docs.google.com/document/d/1EjveVzfZm3c5Iujb7jK-14ByLefK78kddWSwpx5xPwc/edit?usp=sharing
 
-<img href="s-a-e-plus-court-chemin/poster.png"></img>
+<img href="./poster.png"></img>
